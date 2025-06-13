@@ -1,11 +1,77 @@
 import { useEffect, useState } from 'react'
 import Sidebar from '../components/sidebar'
 import Navbar from '../components/navbar'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title } from 'chart.js'
+import { Pie, Line } from 'react-chartjs-2'
+
+// Register ChartJS components
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title)
 
 const Dashboard = () => {
   const [user, setUser] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [selectedRestaurant, setSelectedRestaurant] = useState("Demo's Restaurant")
+
+  // Sales data for pie chart
+  const salesData = {
+    labels: ['Paid Sales', 'Credit Sales', 'Discount', 'Credit Settlements'],
+    datasets: [{
+      data: [5530, 1900, 0, 0],
+      backgroundColor: [
+        'rgb(34, 197, 94)', // green-500
+        'rgb(234, 179, 8)', // yellow-500
+        'rgb(239, 68, 68)', // red-500
+        'rgb(59, 130, 246)', // blue-500
+      ],
+      borderWidth: 1,
+    }],
+  }
+
+  const pieOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `Rs. ${context.raw}`;
+          }
+        }
+      }
+    }
+  }
+
+  // Peak time data for line chart
+  const peakTimeData = {
+    labels: ['10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM', '10 PM'],
+    datasets: [{
+      label: 'Occupancy %',
+      data: [15, 45, 30, 25, 60, 75, 40],
+      borderColor: 'rgb(79, 70, 229)', // indigo-600
+      backgroundColor: 'rgba(79, 70, 229, 0.1)',
+      tension: 0.4,
+      fill: true,
+    }],
+  }
+
+  const peakTimeOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          callback: (value) => `${value}%`,
+        },
+      },
+    },
+  }
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
@@ -58,11 +124,10 @@ const Dashboard = () => {
             </div>
 
             {/* Peak Time */}
-            <div className="bg-white rounded-lg shadow p-6 md:col-span-1"> {/* Adjusted column span */}
+            <div className="bg-white rounded-lg shadow p-6 md:col-span-1">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">Peak Time</h2>
-              {/* Placeholder for graph */}
-              <div className="h-32 bg-gray-200 rounded-md flex items-center justify-center text-gray-500">
-                Graph Placeholder
+              <div className="h-32">
+                <Line data={peakTimeData} options={peakTimeOptions} />
               </div>
             </div>
           </div>
@@ -82,10 +147,9 @@ const Dashboard = () => {
                   <p><span className="inline-block w-3 h-3 mr-2 rounded-full bg-blue-500"></span> Credit Settlements Rs. 0</p> {/* Placeholder */}
                 </div>
               </div>
-              <div className="sm:w-1/2 flex items-center justify-center"> {/* Added width and centering */}
-                {/* Placeholder for pie chart */}
-                <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
-                  Pie Chart
+              <div className="sm:w-1/2 flex items-center justify-center">
+                <div className="w-32 h-32">
+                  <Pie data={salesData} options={pieOptions} />
                 </div>
               </div>
             </div>

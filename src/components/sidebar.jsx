@@ -25,7 +25,7 @@ const demosRestaurantMenuItems = [
     { name: "Extras", icon: <Clock className="w-5 h-5" /> },
     { name: "Billing", icon: <CreditCard className="w-5 h-5" /> },
     { name: "Settings", icon: <Settings className="w-5 h-5" /> },
-    { name: "Log out", icon: <LogOut className="w-5 h-5" /> },
+    // { name: "Log out", icon: <LogOut className="w-5 h-5" /> },
 ];
 
 // Define menu items for The Nest
@@ -38,7 +38,7 @@ const theNestMenuItems = [
     { name: "Inventory", icon: <Package className="w-5 h-5" /> },
     { name: "Reports", icon: <CreditCard className="w-5 h-5" /> },
     { name: "Settings", icon: <Settings className="w-5 h-5" /> },
-    { name: "Log out", icon: <LogOut className="w-5 h-5" /> },
+    // { name: "Log out", icon: <LogOut className="w-5 h-5" /> },
 ];
 
 export default function Sidebar({
