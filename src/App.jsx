@@ -3,7 +3,7 @@ import Login from './pages/login'
 import Register from './pages/register'
 import ForgotPassword from './pages/forgotpassword'
 import Dashboard from './pages/dashboard'
-import Navbar from './components/Navbar'
+// import Navbar from './components/navbar'
 import './App.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
   return isLoggedIn ? (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="pt-16"> {/* Add padding-top to account for fixed navbar */}
         {children}
       </div>
